@@ -1,47 +1,17 @@
 [
     {
-        "title": "Test Title",
-        "text": "Test text",
-        "note_id": "a794"
-    },
-    {
         "title": "john's notes",
         "text": "note",
-        "note_id": "a796"
+        "id": "a796"
     },
     {
-        "title": "1224",
-        "text": "hi",
-        "note_id": "bf3f"
+        "title": "note",
+        "text": "notey",
+        "id": "8945"
     },
     {
-        "title": "1224.5",
-        "text": "arg",
-        "note_id": "a074"
-    },
-    {
-        "title": "123456",
-        "text": "sdfgh",
-        "note_id": "02dd"
-    },
-    {
-        "title": "anon",
-        "text": "aef",
-        "note_id": "6b2b"
-    },
-    {
-        "title": "non",
-        "text": "re",
-        "note_id": "8b61"
-    },
-    {
-        "title": "1238",
-        "text": "areg",
-        "note_id": "ba02"
-    },
-    {
-        "title": "1239",
-        "text": "awef",
-        "note_id": "9dd5"
+        "title": "noterific",
+        "text": "yay",
+        "id": "3024"
     }
 ]

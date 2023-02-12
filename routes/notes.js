@@ -1,25 +1,16 @@
 // -------- REQUIRED IMPORTS --------
 
-const notes = require("express").Router();
-// const noteClass = require("../model/note-class.js");
-
-
 // const express = require("express");
 // const router = express.Router();
+const notes = require("express").Router();
+// const noteClass = require("../model/note-class.js");
 const { readFromFile, readAndAppend, writeToFile } = require("../helpers/fsUtils");
 const path = require('path');
-const { read } = require("fs");
 const uuid = require("../helpers/uuid");
 
 // -------- ROUTE --------
 
 // GET route for retrieving all notes
-// router.get("/", (req, res) => {
-//     console.log("getting route for all notes");
-//     readFromFile("./db/notes-db.json").then(data => {
-//         res.json(JSON.parse(data));
-//     })
-// })
 notes.get("/", (req, res) => {
     // console.log("getting route for all notes");
     readFromFile("./db/notes.json").then(data => res.json(JSON.parse(data)))
@@ -27,31 +18,34 @@ notes.get("/", (req, res) => {
 
 // note by ID
 notes
-    .route("/:note_id")
     // GET route for a specific note by ID
+    .route("/:id")
     .get((req, res) => {
-        const noteId = req.params.note_id;
-        readFromFile('./db/notes.json')
-            .then((data) => JSON.parse(data))
-            .then((json) => {
-                const result = json.filter((note) => note.note_id === noteId);
-                return result.length > 0
-                    ? res.json(result)
-                    : res.json('No note with that ID');
-            });
+        const noteId = req.params.id;
+        if (noteId) {
+            // checks database and filters for matching note ID
+            readFromFile('./db/notes.json')
+                .then((data) => JSON.parse(data))
+                .then((json) => {
+                    const result = json.filter((note) => note.id === noteId);
+                    return result.length > 0
+                        ? res.json(result)
+                        : res.json('No note with that ID');
+                });
+        }
     })
     // PUT route for a specific note by ID
     .put((req, res) => {
-
+        const noteId = req.params.id;
     })
     // DELETE route for a specific note by ID
     .delete((req, res) => {
-        const noteId = req.params.note_id;
+        const noteId = req.params.id;
         readFromFile('./db/notes.json')
             .then(data => JSON.parse(data))
             .then(json => {
                 // make new array of all notes except identified one to be deleted
-                const result = json.filter(note => note.note_id !== noteId);
+                const result = json.filter(note => note.id !== noteId);
                 // save new array
                 writeToFile("./db/notes.json", result);
                 // respond to DELETE request
@@ -59,19 +53,19 @@ notes
             })
     })
 
-notes.param("note_id", (req, res, next, note_id) => {
-    console.log("this is note ID:", note_id)
-})
+// notes.param("id", (req, res, next, id) => {
+//     console.log("this is note ID:", id)
+// })
 
 // POST route for new note 
 notes.post("/", (req, res) => {
     // deconstructs contents of new note
-    const {title, text} = req.body;
+    const { title, text } = req.body;
     if (title && text) {
         const newNote = {
             title,
             text,
-            note_id: uuid(),
+            id: uuid(),
         };
         readAndAppend(newNote, "./db/notes.json");
         const response = {
@@ -91,7 +85,6 @@ notes.post("/", (req, res) => {
     //     console.log(note)
     // }
 })
-
 
 // -------- EXPORT --------
 
