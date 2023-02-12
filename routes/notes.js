@@ -1,13 +1,15 @@
 // -------- REQUIRED IMPORTS --------
 
 const notes = require("express").Router();
+// const noteClass = require("../model/note-class.js");
+
 
 // const express = require("express");
 // const router = express.Router();
 const { readFromFile, readAndAppend, writeToFile } = require("../helpers/fsUtils");
 const path = require('path');
 const { read } = require("fs");
-// const uuid = require("../helpers/uuid");
+const uuid = require("../helpers/uuid");
 
 // -------- ROUTE --------
 
@@ -23,7 +25,7 @@ notes.get("/", (req, res) => {
     readFromFile("./db/notes.json").then(data => res.json(JSON.parse(data)))
 })
 
-
+// note by ID
 notes
     .route("/:note_id")
     // GET route for a specific note by ID
@@ -46,10 +48,46 @@ notes
     .delete((req, res) => {
         const noteId = req.params.note_id;
         readFromFile('./db/notes.json')
+            .then(data => JSON.parse(data))
+            .then(json => {
+                // make new array of all notes except identified one to be deleted
+                const result = json.filter(note => note.note_id !== noteId);
+                // save new array
+                writeToFile("./db/notes.json", result);
+                // respond to DELETE request
+                res.json(`Note ${noteId} has been deleted!`);
+            })
     })
 
 notes.param("note_id", (req, res, next, note_id) => {
     console.log("this is note ID:", note_id)
+})
+
+// POST route for new note 
+notes.post("/", (req, res) => {
+    // deconstructs contents of new note
+    const {title, text} = req.body;
+
+    if (req.body) {
+        const newNote = {
+            title,
+            text,
+            // note_id: uuid(),
+        };
+        readAndAppend(newNote, "./db/notes.json");
+        console.log(newNote);
+        const response = {
+            status: "success",
+            body: newNote,
+        };
+    } else {
+        res.json("Error in creating new note!")
+    }
+    // testing using OOP class
+    // if (req.body) {
+    //     const note = new Note(req.body).saveNote();
+    //     console.log(note)
+    // }
 })
 
 
