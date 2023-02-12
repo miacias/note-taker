@@ -1,9 +1,10 @@
 // -------- REQUIRED IMPORTS --------
+
 const express = require("express");
 const router = express.Router();
 const notesRouter = require("./notes.js");
 
-// -------- ROUTERS --------
+// -------- MODULAR ROUTERS --------
 
 router.use("/notes", notesRouter);
 
