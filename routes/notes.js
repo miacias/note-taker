@@ -21,7 +21,7 @@ const uuid = require("../helpers/uuid");
 //     })
 // })
 notes.get("/", (req, res) => {
-    console.log("getting route for all notes");
+    // console.log("getting route for all notes");
     readFromFile("./db/notes.json").then(data => res.json(JSON.parse(data)))
 })
 
@@ -67,19 +67,21 @@ notes.param("note_id", (req, res, next, note_id) => {
 notes.post("/", (req, res) => {
     // deconstructs contents of new note
     const {title, text} = req.body;
-
-    if (req.body) {
+    if (title && text) {
         const newNote = {
             title,
             text,
-            // note_id: uuid(),
+            note_id: uuid(),
         };
         readAndAppend(newNote, "./db/notes.json");
-        console.log(newNote);
         const response = {
             status: "success",
             body: newNote,
         };
+        console.log("response:", response)
+        // res.send(res.json(response)) // auto-updates
+        res.status(201).json(response) // returns newly-created data to Insomnia for testing
+
     } else {
         res.json("Error in creating new note!")
     }
