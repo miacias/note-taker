@@ -1,8 +1,12 @@
 // -------- REQUIRED IMPORTS --------
+
 const express = require("express");
 const router = express.Router();
 const { readFromFile, readAndAppend } = require("../helpers/fsUtils");
+const path = require('path');
 // const uuid = require("../helpers/uuid");
+
+// -------- ROUTE --------
 
 // GET route for retrieving all notes
 router.get("/", (req, res) => {
@@ -11,5 +15,7 @@ router.get("/", (req, res) => {
         res.json(JSON.parse(data));
     })
 })
+
+// -------- EXPORT --------
 
 module.exports = router;

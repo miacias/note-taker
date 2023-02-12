@@ -7,5 +7,7 @@ const notesRouter = require("./notes.js");
 
 router.use("/notes", notesRouter);
 
+// -------- EXPORT --------
+
 // export router to server.js
 module.exports = router;
