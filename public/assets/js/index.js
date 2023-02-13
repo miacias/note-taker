@@ -46,8 +46,8 @@ const getNotes = () =>
 
 // modified to handle saving new AND updated notes
 const saveNote = (note) => { //sets ID to null for notes that are new
-  if (id !== null) {
-    fetch(`/api/notes/${id}`, {
+  if (note.id !== null) {
+    fetch(`/api/notes/${note.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -102,6 +102,7 @@ const renderActiveNote = () => {
 
 // modified to handle note save and updating notes
 const handleNoteSave = (e) => {
+  console.log("hi handle note save")
   e.stopPropagation();
   const note = e.target;
   const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
@@ -109,7 +110,7 @@ const handleNoteSave = (e) => {
   const newNote = {
     title: noteTitle.value,
     text: noteText.value,
-    id: activeNote.id || null
+    id: noteId || null
   };
   saveNote(newNote).then(() => {
     getAndRenderNotes();
