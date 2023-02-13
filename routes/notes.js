@@ -36,7 +36,35 @@ notes
     })
     // PUT route for a specific note by ID
     .put((req, res) => {
+        // finds old version of note
         const noteId = req.params.id;
+        let newId = noteId;
+        readFromFile('./db/notes.json')
+            .then(data => JSON.parse(data))
+            .then(json => {
+                // make new array of all notes except identified one to be deleted
+                const result = json.filter(note => note.id !== noteId);
+                // save new array
+                writeToFile("./db/notes.json", result);
+                // respond to DELETE request
+                res.json(`Note ${noteId} has been deleted!`);
+            })
+            .then(() => {
+                // adds updated note info
+                const { title, text } = req.body;
+                if (title && text) {
+                    const newNote = {
+                        title,
+                        text,
+                        id: newId,
+                    };
+                    readAndAppend(newNote, "./db/notes.json");
+                    const response = {
+                        status: "success",
+                        body: newNote,
+                    };
+                }
+            })
     })
     // DELETE route for a specific note by ID
     .delete((req, res) => {

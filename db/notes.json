@@ -1,10 +1,5 @@
 [
     {
-        "title": "john's notes",
-        "text": "note",
-        "id": "a796"
-    },
-    {
         "title": "note",
         "text": "notey",
         "id": "8945"
@@ -13,5 +8,10 @@
         "title": "noterific",
         "text": "yay",
         "id": "3024"
+    },
+    {
+        "title": "john's newest note",
+        "text": "newest note",
+        "id": "a796"
     }
 ]

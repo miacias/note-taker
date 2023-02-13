@@ -37,9 +37,9 @@ app.get("/notes", (req, res) => {
 // );
 
 // returns to homepage if URL is incorrectly typed
-app.get('/*', (req, res) =>
-  res.sendFile(path.join(__dirname, 'public/index.html'))
-);
+// app.get('/*', (req, res) =>
+//   res.sendFile(path.join(__dirname, 'public/index.html'))
+// );
 
 // -------- LISTENERS --------
 
