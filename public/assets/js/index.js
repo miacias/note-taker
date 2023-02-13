@@ -45,25 +45,22 @@ const getNotes = () =>
 //   });
 
 // modified to handle saving new AND updated notes
-const saveNote = (note) => { //sets ID to null for notes that are new
-  if (note.id !== null) {
-    fetch(`/api/notes/${note.id}`, {
+const saveNote = (note) => //sets ID to null for notes that are new
+  note.id !== null
+    ? fetch(`/api/notes/${note.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(note),
-    });
-  } else {
-    fetch('/api/notes', {
+    })
+    : fetch('/api/notes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(note),
-    });
-  }
-}
+    })
 
 const deleteNote = (id) =>
   fetch(`/api/notes/${id}`, {
@@ -81,6 +78,8 @@ const renderActiveNote = () => {
     // noteText.setAttribute('readonly', true);
     noteTitle.value = activeNote.title;
     noteText.value = activeNote.text;
+    // adds ID to save button
+    saveNoteBtn.setAttribute("note-id", activeNote.id);
   } else {
     noteTitle.removeAttribute('readonly');
     noteText.removeAttribute('readonly');
@@ -101,17 +100,17 @@ const renderActiveNote = () => {
 // };
 
 // modified to handle note save and updating notes
-const handleNoteSave = (e) => {
+const handleNoteSave = () => {
   console.log("hi handle note save")
-  e.stopPropagation();
-  const note = e.target;
-  const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
-  // ID is null because it is a new note OR defined with its same ID from previously
-  const newNote = {
-    title: noteTitle.value,
-    text: noteText.value,
-    id: noteId || null
-  };
+  let newNote = {};
+  if (saveNoteBtn.getAttribute("note-id")) {
+    newNote.title = noteTitle.value;
+    newNote.text = noteText.value;
+    newNote.id = saveNoteBtn.getAttribute("note-id");
+  } else {
+    newNote.title = noteTitle.value;
+    newNote.text = noteText.value;
+  }
   saveNote(newNote).then(() => {
     getAndRenderNotes();
     renderActiveNote();

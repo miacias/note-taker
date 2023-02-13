@@ -42,14 +42,14 @@ notes
         readFromFile('./db/notes.json')
             .then(data => JSON.parse(data))
             .then(json => {
+                // find position in array then modify note in that index location
+                // not delete then reorder
                 // make new array of all notes except identified one to be deleted
                 const result = json.filter(note => note.id !== noteId);
                 // save new array
                 writeToFile("./db/notes.json", result);
                 // respond to DELETE request
-                res.json(`Note ${noteId} has been deleted!`);
-            })
-            .then(() => {
+                // res.json(`Note ${noteId} has been deleted!`);
                 // adds updated note info
                 const { title, text } = req.body;
                 if (title && text) {
@@ -63,8 +63,13 @@ notes
                         status: "success",
                         body: newNote,
                     };
+                    res.json(response);
+                } else {
+                    res.send("There was an issue saving your note.");
                 }
             })
+            // .then(() => {
+            // })
     })
     // DELETE route for a specific note by ID
     .delete((req, res) => {
