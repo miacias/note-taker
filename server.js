@@ -31,18 +31,13 @@ app.get("/notes", (req, res) => {
     res.sendFile(path.join(__dirname, "/public/notes.html"))
 })
 
-// returns to homepage if URL is incorrectly typed
-app.get('/notes/*', (req, res) =>
-// if (req.url.endsWith("/")) {
-        
-// }
-  res.sendFile(path.join(__dirname, 'public/index.html'))
-    // res.redirect(path.join(__dirname, 'public/notes.html'))
-
-);
+// returns to notes page if URL is incorrectly typed
+// app.get('/notes/*', (req, res) =>
+//   res.sendFile(path.join(__dirname, 'public/notes.html'))
+// );
 
 // returns to homepage if URL is incorrectly typed
-app.get('*', (req, res) =>
+app.get('/*', (req, res) =>
   res.sendFile(path.join(__dirname, 'public/index.html'))
 );
 
