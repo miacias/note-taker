@@ -1,12 +1,17 @@
 [
     {
-        "title": "note",
-        "text": "notey",
-        "id": "8945"
+        "title": "getting started",
+        "text": "To open a fresh, new note, start by clicking the Add plus icon in the top right of the screen. Type in the text fields. Save it for later by clicking the Save floppy disc icon. Add as many notes as you would like! To view an older note, search the left-side navigation bar and click on a note's title. No longer need a note? Click the Delete trashcan icon to remove it permanently.",
+        "id": "2268"
     },
     {
-        "title": "noterific",
-        "text": "yay",
-        "id": "3024"
+        "title": "tell me a story",
+        "text": "once upon a time",
+        "id": "2268"
+    },
+    {
+        "title": "don't forget",
+        "text": "wait, what was it?",
+        "id": "d756"
     }
 ]
