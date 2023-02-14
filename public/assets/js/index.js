@@ -46,21 +46,22 @@ const getNotes = () =>
 
 // modified to handle saving new AND updated notes
 const saveNote = (note) => //sets ID to null for notes that are new
-  note.id !== null
-    ? fetch(`/api/notes/${note.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(note),
-    })
-    : fetch('/api/notes', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(note),
-    })
+  console.log("note: ", note)
+note.id !== null || undefined
+  ? fetch(`/api/notes/${note.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(note),
+  })
+  : fetch('/api/notes', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(note),
+  })
 
 const deleteNote = (id) =>
   fetch(`/api/notes/${id}`, {
