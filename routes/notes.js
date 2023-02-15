@@ -1,12 +1,10 @@
 // -------- REQUIRED IMPORTS --------
 
-// const express = require("express");
-// const router = express.Router();
 const notes = require("express").Router();
 // const noteClass = require("../model/note-class.js");
 const { readFromFile, readAndAppend, writeToFile } = require("../helpers/fsUtils");
 const path = require('path');
-const uuid = require("../helpers/uuid");
+const { v4: uuidv4 } = require("uuid"); // npmjs.com/package/uuid
 
 // -------- ROUTE --------
 
@@ -34,7 +32,7 @@ notes
                 });
         }
     })
-    // PUT route for a specific note by ID
+    // PUT route for a specific note by ID (unused)
     .put((req, res) => {
         // finds old version of note
         const noteId = req.params.id;
@@ -93,7 +91,7 @@ notes.post("/", (req, res) => {
         const newNote = {
             title,
             text,
-            id: uuid(),
+            id: uuidv4(),
         };
         readAndAppend(newNote, "./db/notes.json");
         const response = {
